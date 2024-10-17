@@ -22,6 +22,7 @@
     <!-- slider links -->
     <!-- <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
     <script src="js/jQuery3.4.1.js"></script>
+    <script type="text/javascript" src="google-sheet-api.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
@@ -34,7 +35,7 @@
 
   <body>
     <!-- HEADER -->
-    <div id="1" style="height: 0px;"></div>
+    <!-- <div id="1" style="height: 0px;"></div>
     <script>
       load("header.html");
       function load(url) {
@@ -43,7 +44,7 @@
         req.send(null);
         document.getElementById(1).innerHTML = req.responseText;
       }
-    </script>
+    </script> -->
     <!-- <div id="2"> -->
     <!-- <div id="containerSlider"> -->
     <!-- <div
@@ -59,7 +60,7 @@
     <!-- </div> -->
     <!-- </div> -->
     <!-- SLIDER -->
-    <div id="2"></div>
+    <!-- <div id="2"></div>
     <script>
       load("slider.html");
       function load(url) {
@@ -68,10 +69,10 @@
         req.send(null);
         document.getElementById(2).innerHTML = req.responseText;
       }
-    </script>
+    </script> -->
 
     <!-- CONTENT SECTION -->
-    <div id="3"></div>
+    <!-- <div id="3"></div>
     <script>
       load("content.html");
       function load(url) {
@@ -80,10 +81,18 @@
         req.send(null);
         document.getElementById(3).innerHTML = req.responseText;
       }
-    </script>
+    </script> -->
 
+    <!-- gsheet table -->
+    <div id="gsheet">
+      <button onclick="readGsheetData()">gsheet api call</button>
+      <table
+        id="products_data"
+        style="border-collapse: collapse; border: 1px solid black"
+      ></table>
+    </div>
     <!-- FOOTER -->
-    <div id="4"></div>
+    <!-- <div id="4"></div>
     <script>
       load("footer.html");
       function load(url) {
@@ -92,11 +101,11 @@
         req.send(null);
         document.getElementById(4).innerHTML = req.responseText;
       }
-    </script>
+    </script> -->
   </body>
 
   <!-- slider JS START -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
   <script>
     $(document).ready(function () {
       $("#containerSlider").slick({
@@ -108,9 +117,9 @@
         autoplaySpeed: 1500,
       });
     });
-  </script>
+  </script> -->
   <!-- slider JS ENDS -->
 
   <!-- content JS -->
-  <script src="content.js"></script>
+  <!-- <script src="content.js"></script> -->
 </html>
