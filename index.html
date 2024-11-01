@@ -30,11 +30,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
     />
+    <script type="text/javascript" src="gsheet.service.js"></script>
   </head>
 
   <body>
     <!-- HEADER -->
-    <div id="1" style="height: 0px;"></div>
+    <div id="1" style="height: 0px"></div>
     <script>
       load("header.html");
       function load(url) {
@@ -81,6 +82,12 @@
         document.getElementById(3).innerHTML = req.responseText;
       }
     </script>
+
+    <!-- gsheet -->
+
+    <div id="products_table">
+      <button onclick="readGoogleSheet()">Click me</button>
+    </div>
 
     <!-- FOOTER -->
     <div id="4"></div>
