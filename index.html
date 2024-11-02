@@ -1,116 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!-- <link rel="stylesheet" href="/style.css"> -->
-    <title>nazeeb-collections</title>
-    <!-- favicon -->
-    <link
-      rel="icon"
-      href="https://yt3.ggpht.com/a/AGF-l78km1YyNXmF0r3-0CycCA0HLA_i6zYn_8NZEg=s900-c-k-c0xffffffff-no-rj-mo"
-      type="image/gif"
-      sizes="16x16"
-    />
-    <!-- header links -->
-    <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
-      rel="stylesheet"
-    />
-    <!-- slider links -->
-    <!-- <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
-    <script src="js/jQuery3.4.1.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
-    />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://drive.google.com/thumbnail?id=1dkjM0Z8UH9Imdp0fRbE4zlf93HslqCYk&sz=s4000'); /* Replace with your image URL */
+            background-size: cover; /* Cover the entire page */
+            background-position: center; /* Center the image */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white; /* Change text color for visibility */
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.8); /* White with transparency */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333; /* Dark color for heading */
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
 
-  <body>
-    <!-- HEADER -->
-    <div id="1" style="height: 0px;"></div>
-    <script>
-      load("header.html");
-      function load(url) {
-        req = new XMLHttpRequest();
-        req.open("GET", url, false);
-        req.send(null);
-        document.getElementById(1).innerHTML = req.responseText;
-      }
-    </script>
-    <!-- <div id="2"> -->
-    <!-- <div id="containerSlider"> -->
-    <!-- <div
-      style="
-        margin: auto;
-        text-align: center;
-        padding-top: 10px;
-        box-sizing: border-box;
-      "
-    >
-      <img src="img/img1.png" alt="image1" style="height: 250px;" />
-    </div> -->
-    <!-- </div> -->
-    <!-- </div> -->
-    <!-- SLIDER -->
-    <div id="2"></div>
-    <script>
-      load("slider.html");
-      function load(url) {
-        req = new XMLHttpRequest();
-        req.open("GET", url, false);
-        req.send(null);
-        document.getElementById(2).innerHTML = req.responseText;
-      }
-    </script>
+<div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="submit" value="Login">
+        <div class="error" id="error-message"></div>
+    </form>
+</div>
+<a href="#"> <i class="fas fa-user-circle userIcon"></i> </a>
+<script type="text/javascript" src="google-sheet-api.js"></script>
 
-    <!-- CONTENT SECTION -->
-    <div id="3"></div>
-    <script>
-      load("content.html");
-      function load(url) {
-        req = new XMLHttpRequest();
-        req.open("GET", url, false);
-        req.send(null);
-        document.getElementById(3).innerHTML = req.responseText;
-      }
-    </script>
-
-    <!-- FOOTER -->
-    <div id="4"></div>
-    <script>
-      load("footer.html");
-      function load(url) {
-        req = new XMLHttpRequest();
-        req.open("GET", url, false);
-        req.send(null);
-        document.getElementById(4).innerHTML = req.responseText;
-      }
-    </script>
-  </body>
-
-  <!-- slider JS START -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $("#containerSlider").slick({
-        dots: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 1500,
-      });
-    });
-  </script>
-  <!-- slider JS ENDS -->
-
-  <!-- content JS -->
-  <script src="content.js"></script>
+</body>
 </html>
