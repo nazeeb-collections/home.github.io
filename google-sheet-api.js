@@ -59,7 +59,8 @@ document
     const res = await readGsheetData(SHEET_ID, QUERY);
     console.log("===res", res);
     if (res) {
-      alert("Login successful!");
+      // alert("Login successful!");
+      window.location.href = 'products.html'
       // Redirect or perform additional actions here
     } else {
       errorMessage.textContent = "Invalid username or password.";
