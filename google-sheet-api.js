@@ -54,13 +54,12 @@ document
       errorMessage.textContent = "Please fill in both fields.";
       return;
     }
-    const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ"; // "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ"; // Extract from the Google Sheet URL
+    const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ"; 
     const QUERY = `SELECT D WHERE B="${username}"  AND C="${password}"`;
     const res = await readGsheetData(SHEET_ID, QUERY);
-    console.log("===res", res);
     if (res) {
       // alert("Login successful!");
-      window.location.href = 'products.html'
+      window.location.href = '/products.html'
       // Redirect or perform additional actions here
     } else {
       errorMessage.textContent = "Invalid username or password.";
