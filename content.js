@@ -56,6 +56,18 @@ let containerAccessories = document.getElementById("containerAccessories");
 
 let httpRequest = new XMLHttpRequest();
 
+async function productsListApi() {
+  const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ";
+  const GID = "1144256468";
+  const QUERY = `SELECT * `;
+  const res = await readGsheetData(SHEET_ID, GID, QUERY);
+  const columns= [...res?.table?.cols];
+  console.log("===res", columns, res?.table?.rows?.map((item)=>({...columns?.map((header, i)=>(item?.c?.[i]?.v))})));
+}
+
+
+productsListApi();
+
 const responseObject = [
   {
     id: "1",
@@ -92,7 +104,7 @@ const responseObject = [
     isAccessory: false,
     brand: "500G",
     price: 450,
-  }
+  },
 ];
 
 httpRequest.onreadystatechange = function () {
@@ -101,19 +113,16 @@ httpRequest.onreadystatechange = function () {
       // console.log('call successful');
       // contentTitle = JSON.parse(this.responseText);
       contentTitle = responseObject;
-      console.log("===", responseObject);
       if (document.cookie.indexOf(",counter=") >= 0) {
         var counter = document.cookie.split(",")[1].split("=")[1];
         document.getElementById("badge").innerHTML = counter;
       }
       for (let i = 0; i < contentTitle.length; i++) {
         if (contentTitle[i].isAccessory) {
-          console.log(contentTitle[i]);
           containerAccessories.appendChild(
             dynamicClothingSection(contentTitle[i])
           );
         } else {
-          console.log(contentTitle[i]);
           containerClothing.appendChild(
             dynamicClothingSection(contentTitle[i])
           );
@@ -130,3 +139,4 @@ httpRequest.open(
   true
 );
 httpRequest.send();
+
