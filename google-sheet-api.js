@@ -4,8 +4,8 @@
 
 let productsData = [];
 
-async function readGsheetData(SHEET_ID, QUERY) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq=${encodeURIComponent(
+async function readGsheetData(SHEET_ID, GID, QUERY) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&tq=${encodeURIComponent(
     QUERY
   )}`;
 
@@ -26,11 +26,7 @@ async function readGsheetData(SHEET_ID, QUERY) {
     // Parse the cleaned string to JSON
     const jsonData = JSON.parse(jsonResponse);
 
-    // Access the desired data
-    const customerId = jsonData?.table?.rows?.[0]?.c?.[0]?.v; // Safely access the customerId
-
-    console.log("===resd", customerId); // Log the customerId
-    return customerId; // Return the customerId
+    return jsonData; // Return the customerId
   } catch (error) {
     console.error("Fetch error:", error);
     return null; // Return null or handle the error as needed
@@ -54,13 +50,16 @@ document
       errorMessage.textContent = "Please fill in both fields.";
       return;
     }
-    const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ"; // "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ"; // Extract from the Google Sheet URL
+    const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ";
+    const GID= "815312967";
     const QUERY = `SELECT D WHERE B="${username}"  AND C="${password}"`;
-    const res = await readGsheetData(SHEET_ID, QUERY);
-    console.log("===res", res);
-    if (res) {
+    const res = await readGsheetData(SHEET_ID, GID, QUERY);
+
+    // Access the desired data
+    const customerId = res?.table?.rows?.[0]?.c?.[0]?.v; // Safely access the customerId
+    if (customerId) {
       // alert("Login successful!");
-      window.location.href = 'products.html'
+      window.location.href = "/products.html";
       // Redirect or perform additional actions here
     } else {
       errorMessage.textContent = "Invalid username or password.";
