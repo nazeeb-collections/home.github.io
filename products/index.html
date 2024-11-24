@@ -14,14 +14,14 @@
       sizes="16x16"
     />
     <!-- header links -->
-    <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
+    <!-- <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script> -->
     <link
       href="https://fonts.googleapis.com/css?family=Lato&display=swap"
       rel="stylesheet"
     />
     <!-- slider links -->
     <!-- <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
-    <script src="js/jQuery3.4.1.js"></script>
+    <script src="../js/jQuery3.4.1.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
@@ -34,9 +34,9 @@
 
   <body>
     <!-- HEADER -->
-    <div id="1" style="height: 0px;"></div>
+    <div id="1" style="height: 0px"></div>
     <script>
-      load("header.html");
+      load("../common-components/header.html");
       function load(url) {
         req = new XMLHttpRequest();
         req.open("GET", url, false);
@@ -44,24 +44,11 @@
         document.getElementById(1).innerHTML = req.responseText;
       }
     </script>
-    <!-- <div id="2"> -->
-    <!-- <div id="containerSlider"> -->
-    <!-- <div
-      style="
-        margin: auto;
-        text-align: center;
-        padding-top: 10px;
-        box-sizing: border-box;
-      "
-    >
-      <img src="img/img1.png" alt="image1" style="height: 250px;" />
-    </div> -->
-    <!-- </div> -->
-    <!-- </div> -->
+
     <!-- SLIDER -->
     <div id="2"></div>
     <script>
-      load("slider.html");
+      load("../common-components/slider.html");
       function load(url) {
         req = new XMLHttpRequest();
         req.open("GET", url, false);
@@ -85,7 +72,7 @@
     <!-- FOOTER -->
     <div id="4"></div>
     <script>
-      load("footer.html");
+      load("../common-components/footer.html");
       function load(url) {
         req = new XMLHttpRequest();
         req.open("GET", url, false);
@@ -112,6 +99,13 @@
   <!-- slider JS ENDS -->
 
   <!-- content JS -->
-  <script type="text/javascript" src="google-sheet-api.js"></script>
+  <script
+    type="text/javascript"
+    src="../utility-functions/loginCheck.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="../utility-functions/google-sheet-api.js"
+  ></script>
   <script src="content.js"></script>
 </html>
