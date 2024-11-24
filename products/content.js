@@ -1,12 +1,12 @@
 
 let contentTitle;
 
-function dynamicClothingSection(ob) {
+function dynamicDetailSection(ob) {
   let boxDiv = document.createElement("div");
   boxDiv.id = "box";
 
   let boxLink = document.createElement("a");
-  boxLink.href = "/contentDetails.html?" + ob.id;
+  boxLink.href = "/product-detail?" + ob.id;
   let imgTag = document.createElement("img");
   imgTag.src = ob.preview;
 
@@ -66,10 +66,10 @@ async function productsListApi() {
   for (let i = 0; i < productsArray?.length; i++) {
     if (productsArray?.[i].isAccessory) {
       containerAccessories.appendChild(
-        dynamicClothingSection(productsArray?.[i])
+        dynamicDetailSection(productsArray?.[i])
       );
     } else {
-      containerClothing.appendChild(dynamicClothingSection(productsArray?.[i]));
+      containerClothing.appendChild(dynamicDetailSection(productsArray?.[i]));
     }
   }
 }
