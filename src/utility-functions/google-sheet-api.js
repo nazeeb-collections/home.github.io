@@ -33,7 +33,6 @@ async function readGsheetData(SHEET_ID, GID, QUERY) {
   }
 }
 
-
 async function login(event) {
   event.preventDefault(); // Prevent form submission
 
@@ -64,9 +63,9 @@ async function login(event) {
       time: new Date(),
     };
     localStorage.setItem("user", JSON.stringify(user));
-    window.location.href = "/products";
+    // window.location.href = "/products";
+    loadPage("products");
   } else {
     errorMessage.textContent = "Invalid username or password.";
   }
 }
-

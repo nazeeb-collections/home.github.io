@@ -1,12 +1,19 @@
+load("src/common-components/header.html", 1);
+load("src/common-components/slider.html", 2);
+load("src/products/content.html", 3);
+load("src/common-components/footer.html", 4);
 
 let contentTitle;
 
 function dynamicDetailSection(ob) {
   let boxDiv = document.createElement("div");
   boxDiv.id = "box";
+  boxDiv.onclick = function () {
+    loadPage("productDetails", { itemCode: ob });
+  };
 
   let boxLink = document.createElement("a");
-  boxLink.href = "/product-detail?" + ob.id;
+  // boxLink.href = "/product-detail?" + ob.id;
   let imgTag = document.createElement("img");
   imgTag.src = ob.preview;
 
