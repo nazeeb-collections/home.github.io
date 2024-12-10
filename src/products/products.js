@@ -1,15 +1,14 @@
-load("src/common-components/header.html", 1);
-load("src/common-components/slider.html", 2);
-load("src/products/content.html", 3);
-load("src/common-components/footer.html", 4);
-
+loadContent("src/header/header.html", 1);
+loadContent("src/slider/slider.html", 2);
+loadContent("src/content/content.html", 3);
+loadContent("src/footer/footer.html", 4);
 let contentTitle;
 
 function dynamicDetailSection(ob) {
   let boxDiv = document.createElement("div");
   boxDiv.id = "box";
   boxDiv.onclick = function () {
-    loadPage("productDetails", { itemCode: ob });
+    loadPage("productDetails", "main-content", { itemCode: ob });
   };
 
   let boxLink = document.createElement("a");
@@ -42,12 +41,11 @@ function dynamicDetailSection(ob) {
   return boxDiv;
 }
 
-let mainContainer = document.getElementById("mainContainer");
-let containerClothing = document.getElementById("containerClothing");
-let containerAccessories = document.getElementById("containerAccessories");
-
-const productsArray = [];
 async function productsListApi() {
+  const productsArray = [];
+  let mainContainer = document.getElementById("mainContainer");
+  let containerClothing = document.getElementById("containerClothing");
+  let containerAccessories = document.getElementById("containerAccessories");
   const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ";
   const GID = "1144256468";
   const QUERY = `SELECT * `;

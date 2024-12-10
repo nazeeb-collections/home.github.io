@@ -2,7 +2,7 @@
 // const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ"; // Extract from the Google Sheet URL
 // const RANGE = "Form responses 1!A:F"; // Define the range of cells you want to read
 
-let productsData = [];
+// let productsData = [];
 
 async function readGsheetData(SHEET_ID, GID, QUERY) {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&tq=${encodeURIComponent(
@@ -64,7 +64,7 @@ async function login(event) {
     };
     localStorage.setItem("user", JSON.stringify(user));
     // window.location.href = "/products";
-    loadPage("products");
+    loadPage("products","main-content");
   } else {
     errorMessage.textContent = "Invalid username or password.";
   }

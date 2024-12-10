@@ -3,9 +3,9 @@ function loginCheck() {
   const userObject = storedData ? JSON.parse(storedData) : {};
   if (!userObject?.id) {
     localStorage.removeItem("user");
-    loadPage("login");
+    loadPage("login", "main-content");
   } else {
-    loadPage("products");
+    loadPage("products", "main-content");
   }
 }
 

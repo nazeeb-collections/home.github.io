@@ -90,35 +90,25 @@ const mainRoutes = {
         tag: "link",
         props: [{ href: "src/products/products.css" }, { rel: "stylesheet" }],
       },
-
       {
         tag: "link",
-        props: [
-          { href: "src/common-components/header.css" },
-          { rel: "stylesheet" },
-        ],
+        props: [{ href: "src/header/header.css" }, { rel: "stylesheet" }],
       },
       {
         tag: "link",
-        props: [
-          { href: "src/common-components/footer.css" },
-          { rel: "stylesheet" },
-        ],
+        props: [{ href: "src/footer/footer.css" }, { rel: "stylesheet" }],
       },
     ],
     tail: [
       {
         tag: "script",
-        props: [
-          { type: "text/javascript" },
-          { src: "src/products/products.js" },
-        ],
+        props: [{ type: "text/javascript" }, { src: "src/slider/slider.js" }],
       },
       {
         tag: "script",
         props: [
           { type: "text/javascript" },
-          { src: "src/common-components/slider.js" },
+          { src: "src/products/products.js" },
         ],
       },
     ],
@@ -143,53 +133,66 @@ const mainRoutes = {
         ],
       },
     ],
+    state: {},
   },
 };
 
-function loadPage(page, state) {
-  fetch(`${mainRoutes?.[page]?.path}`)
-    .then((response) => {
-      if (!response.ok) {
+async function loadPage(page, id, state) {
+  if (mainRoutes?.[page]?.path) {
+    try {
+      // Clear previously loaded dynamic resources
+      removeDynamicResources();
+      // Fetch HTML content for the new page
+      const response = await fetch(`${mainRoutes?.[page]?.path}`);
+      if (!response.ok)
         throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.text();
-    })
-    .then((html) => {
-      const element = document.getElementById("main-content");
-      element.innerHTML = html;
-      mainRoutes?.[page]?.head?.map((ref) => {
-        loadToHead(ref);
-      });
-      mainRoutes?.[page]?.tail?.map((ref) => {
-        loadToTail(ref);
-      });
-    })
-    .catch((error) => {
-      document.getElementById(
-        "main-content"
-      ).innerText = `Error: ${error.message}`;
-    });
 
-  function loadToHead(ref) {
-    const tag = document.createElement(`${ref?.tag}`);
-    ref?.props?.map((prop) => {
-      tag[Object.keys(prop)?.[0]] = prop[Object.keys(prop)?.[0]];
-    });
-    document.head.appendChild(tag);
-  }
-
-  function loadToTail(ref) {
-    const tag = document.createElement(`${ref?.tag}`);
-    ref?.props?.map((prop) => {
-      tag[Object.keys(prop)?.[0]] = prop[Object.keys(prop)?.[0]];
-    });
-    document.body.appendChild(tag);
+      const html = await response.text();
+      document.getElementById(id).innerHTML = html;
+      // Dynamically load new styles and scripts
+      mainRoutes?.[page]?.head?.forEach((ref) => loadToHead(ref));
+      mainRoutes?.[page]?.tail?.forEach((ref) => loadToTail(ref));
+    } catch (error) {
+      document.getElementById(id).innerText = `Error: ${error.message}`;
+      console.error(error);
+    }
   }
 }
 
-function load(url, id) {
+function loadContent(url, id) {
   req = new XMLHttpRequest();
   req.open("GET", url, false);
   req.send(null);
   document.getElementById(id).innerHTML = req.responseText;
+}
+
+function loadToHead(ref) {
+  const tag = document.createElement(`${ref?.tag}`);
+  ref?.props?.map((prop) => {
+    tag[Object.keys(prop)?.[0]] = prop[Object.keys(prop)?.[0]];
+  });
+  tag.setAttribute("data-dynamic", "true"); // Mark as dynamic
+  document.head.appendChild(tag);
+}
+
+function loadToTail(ref) {
+  const tag = document.createElement(`${ref?.tag}`);
+  ref?.props?.map((prop) => {
+    tag[Object.keys(prop)?.[0]] = prop[Object.keys(prop)?.[0]];
+  });
+  tag.setAttribute("data-dynamic", "true"); // Mark as dynamic
+  document.body.appendChild(tag);
+}
+
+// Function to remove all dynamically loaded resources
+function removeDynamicResources() {
+  // Remove dynamic styles
+  document.querySelectorAll('link[data-dynamic="true"]').forEach((link) => {
+    link.parentNode.removeChild(link);
+  });
+
+  // Remove dynamic scripts
+  document.querySelectorAll('script[data-dynamic="true"]').forEach((script) => {
+    script.parentNode.removeChild(script);
+  });
 }
