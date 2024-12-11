@@ -21,72 +21,6 @@ const mainRoutes = {
     path: "src/products/products.html",
     head: [
       {
-        tag: "script",
-        props: [
-          { type: "text/javascript" },
-          { src: "src/utility-functions/google-sheet-api.js" },
-        ],
-      },
-      {
-        tag: "script",
-        props: [
-          { type: "text/javascript" },
-          { src: "https://code.jquery.com/jquery-3.6.4.min.js" },
-        ],
-      },
-      {
-        tag: "script",
-        props: [
-          { type: "text/javascript" },
-          {
-            src: "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js",
-          },
-        ],
-      },
-      {
-        tag: "link",
-        props: [
-          { href: "https://fonts.googleapis.com/css?family=Lato&display=swap" },
-          { rel: "stylesheet" },
-        ],
-      },
-      {
-        tag: "link",
-        props: [
-          {
-            href: "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css",
-          },
-          { rel: "stylesheet" },
-        ],
-      },
-      {
-        tag: "link",
-        props: [
-          {
-            href: "https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css",
-          },
-          { rel: "stylesheet" },
-        ],
-      },
-      {
-        tag: "link",
-        props: [
-          {
-            href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css",
-          },
-          { rel: "stylesheet" },
-        ],
-      },
-      {
-        tag: "link",
-        props: [
-          {
-            href: "https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css",
-          },
-          { rel: "stylesheet" },
-        ],
-      },
-      {
         tag: "link",
         props: [{ href: "src/products/products.css" }, { rel: "stylesheet" }],
       },
@@ -100,10 +34,6 @@ const mainRoutes = {
       },
     ],
     tail: [
-      {
-        tag: "script",
-        props: [{ type: "text/javascript" }, { src: "src/slider/slider.js" }],
-      },
       {
         tag: "script",
         props: [
@@ -143,12 +73,7 @@ async function loadPage(page, id, state) {
       // Clear previously loaded dynamic resources
       removeDynamicResources();
       // Fetch HTML content for the new page
-      const response = await fetch(`${mainRoutes?.[page]?.path}`);
-      if (!response.ok)
-        throw new Error(`HTTP error! Status: ${response.status}`);
-
-      const html = await response.text();
-      document.getElementById(id).innerHTML = html;
+      loadContent(`${mainRoutes?.[page]?.path}`, id);
       // Dynamically load new styles and scripts
       mainRoutes?.[page]?.head?.forEach((ref) => loadToHead(ref));
       mainRoutes?.[page]?.tail?.forEach((ref) => loadToTail(ref));
@@ -157,6 +82,13 @@ async function loadPage(page, id, state) {
       console.error(error);
     }
   }
+}
+
+async function loadHtmlBehind(url, id) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+  const html = await response.text();
+  document.getElementById(id).innerHTML = html;
 }
 
 function loadContent(url, id) {

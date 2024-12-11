@@ -1,5 +1,5 @@
-let id = mainRoutes[page].state?.itemCode;
-console.log("===main", mainRoutes);
+let data = mainRoutes?.productDetails?.state?.data;
+let id = data?.id;
 
 if (document.cookie.indexOf(",counter=") >= 0) {
   let counter = document.cookie.split(",")[1].split("=")[1];
@@ -103,7 +103,7 @@ function dynamicContentDetails(ob) {
 
 // BACKEND CALLING
 
-// const productsArray = [];
+const productsArray = [];
 async function productsListApi() {
   const SHEET_ID = "1X9MNBQpWpv8wlLJrmZ133TQ8REO9s1OHHiYS1_bzlvQ";
   const GID = "1144256468";
@@ -113,7 +113,12 @@ async function productsListApi() {
   res?.table?.rows?.map((item) => {
     const productObj = {};
     columns?.map((header, i) => {
-      if (header?.label === "photos" || header?.label === "size") {
+      if (header?.label === "photos") {
+        productObj[header?.label] = [
+          data?.preview,
+          ...item?.c?.[i]?.v?.split(","),
+        ];
+      } else if (header?.label === "size") {
         productObj[header?.label] = item?.c?.[i]?.v?.split(",");
       } else {
         productObj[header?.label] = item?.c?.[i]?.v;
