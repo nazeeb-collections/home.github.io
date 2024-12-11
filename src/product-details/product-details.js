@@ -1,5 +1,5 @@
-
-let id = location.search.split("?")[1];
+let data = mainRoutes?.productDetails?.state?.data;
+let id = data?.id;
 
 if (document.cookie.indexOf(",counter=") >= 0) {
   let counter = document.cookie.split(",")[1].split("=")[1];
@@ -113,7 +113,12 @@ async function productsListApi() {
   res?.table?.rows?.map((item) => {
     const productObj = {};
     columns?.map((header, i) => {
-      if (header?.label === "photos" || header?.label === "size") {
+      if (header?.label === "photos") {
+        productObj[header?.label] = [
+          data?.preview,
+          ...item?.c?.[i]?.v?.split(","),
+        ];
+      } else if (header?.label === "size") {
         productObj[header?.label] = item?.c?.[i]?.v?.split(",");
       } else {
         productObj[header?.label] = item?.c?.[i]?.v;
@@ -127,5 +132,3 @@ async function productsListApi() {
 }
 
 productsListApi();
-
-
