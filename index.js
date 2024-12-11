@@ -65,9 +65,28 @@ const mainRoutes = {
     ],
     state: {},
   },
+  cart: {
+    path: "src/cart/cart.html",
+    head: [
+      {
+        tag: "link",
+        props: [{ href: "src/cart/cart.css" }, { rel: "stylesheet" }],
+      },
+    ],
+    tail: [
+      {
+        tag: "script",
+        props: [
+          { type: "text/javascript" },
+          { src: "src/cart/cart.js" },
+        ],
+      },
+    ],
+  },
 };
 
 async function loadPage(page, id, state) {
+  console.log("reached here")
   if (mainRoutes?.[page]?.path) {
     try {
       // Clear previously loaded dynamic resources
