@@ -116,7 +116,7 @@ async function loadPage(page, id, state) {
       mainRoutes?.[page]?.head?.forEach((ref) => loadToHead(ref));
       mainRoutes?.[page]?.tail?.forEach((ref) => loadToTail(ref));
     } catch (error) {
-      document.getElementById(id).innerText = `Error: ${error.message}`;
+      document.getElementById(ref?.[1] || id).innerText = `Error: ${error.message}`;
       console.error(error);
     }
   } else {
