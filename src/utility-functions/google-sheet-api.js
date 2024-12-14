@@ -64,7 +64,17 @@ async function login(event) {
     };
     localStorage.setItem("user", JSON.stringify(user));
     // window.location.href = "/products";
-    loadPage("products","main-content");
+    // loadPage("products", "main-content");
+    const lastPage = localStorage.getItem("lastPage") || "products"; // Default to 'products'
+    if (mainRoutes?.[lastPage]) {
+      if (lastPage === "login") {
+        loadPage("products"); // Fallback if lastPage is invalid
+      } else {
+        loadPage(lastPage);
+      }
+    } else {
+      loadPage("products"); // Fallback if lastPage is invalid
+    }
   } else {
     errorMessage.textContent = "Invalid username or password.";
   }

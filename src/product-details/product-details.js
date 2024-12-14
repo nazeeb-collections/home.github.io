@@ -1,12 +1,13 @@
 let data = mainRoutes?.productDetails?.state?.data;
 let id = data?.id;
 
-if (document.cookie.indexOf(",counter=") >= 0) {
-  let counter = document.cookie.split(",")[1].split("=")[1];
-  document.getElementById("badge").innerHTML = counter;
-}
+// if (document.cookie.indexOf(",counter=") >= 0) {
+//   let counter = document.cookie.split(",")[1].split("=")[1];
+//   document.getElementById("badge").innerHTML = counter;
+// }
 
 function dynamicContentDetails(ob) {
+  console.log("===ob", ob);
   let mainContainer = document.createElement("div");
   mainContainer.id = "containerD";
   document.getElementById("containerProduct").appendChild(mainContainer);

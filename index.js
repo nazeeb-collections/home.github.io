@@ -1,6 +1,6 @@
 const mainRoutes = {
   login: {
-    path: "src/login/login.html",
+    pages: [["src/login/login.html", "main-content"]],
     head: [
       {
         tag: "link",
@@ -18,7 +18,12 @@ const mainRoutes = {
     ],
   },
   products: {
-    path: "src/products/products.html",
+    pages: [
+      ["src/products/products.html", "main-content"],
+      ["src/slider/slider.html", 2],
+      ["src/content/content.html", 3],
+      ["src/footer/footer.html", 4],
+    ],
     head: [
       {
         tag: "link",
@@ -41,10 +46,18 @@ const mainRoutes = {
           { src: "src/products/products.js" },
         ],
       },
+      {
+        tag: "script",
+        props: [{ type: "text/javascript" }, { src: "src/slider/slider.js" }],
+      },
+      {
+        tag: "script",
+        props: [{ type: "text/javascript" }, { src: "src/content/content.js" }],
+      },
     ],
   },
   productDetails: {
-    path: "src/product-details/product-details.html",
+    pages: [["src/product-details/product-details.html", "main-content"]],
     head: [
       {
         tag: "link",
@@ -66,7 +79,7 @@ const mainRoutes = {
     state: {},
   },
   cart: {
-    path: "src/cart/cart.html",
+    pages: [["src/cart/cart.html", "main-content"]],
     head: [
       {
         tag: "link",
@@ -76,23 +89,29 @@ const mainRoutes = {
     tail: [
       {
         tag: "script",
-        props: [
-          { type: "text/javascript" },
-          { src: "src/cart/cart.js" },
-        ],
+        props: [{ type: "text/javascript" }, { src: "src/cart/cart.js" }],
       },
     ],
   },
 };
 
+let pageHistory = []; // Initialize an empty history stack
+
 async function loadPage(page, id, state) {
-  console.log("reached here")
-  if (mainRoutes?.[page]?.path) {
+  if (mainRoutes?.[page]?.pages) {
     try {
+      // Push the current page onto the history stack before loading the new page
+      if (pageHistory[pageHistory.length - 1] !== page) {
+        pageHistory.push(page);
+      }
+      localStorage.setItem("lastPage", page); // Save the current page
       // Clear previously loaded dynamic resources
       removeDynamicResources();
       // Fetch HTML content for the new page
-      loadContent(`${mainRoutes?.[page]?.path}`, id);
+      mainRoutes?.[page]?.pages?.forEach((ref) =>
+        loadContent(ref?.[0], ref?.[1] || id)
+      );
+
       // Dynamically load new styles and scripts
       mainRoutes?.[page]?.head?.forEach((ref) => loadToHead(ref));
       mainRoutes?.[page]?.tail?.forEach((ref) => loadToTail(ref));
@@ -100,6 +119,8 @@ async function loadPage(page, id, state) {
       document.getElementById(id).innerText = `Error: ${error.message}`;
       console.error(error);
     }
+  } else {
+    loadContent("", id);
   }
 }
 
@@ -111,10 +132,14 @@ async function loadHtmlBehind(url, id) {
 }
 
 function loadContent(url, id) {
-  req = new XMLHttpRequest();
-  req.open("GET", url, false);
-  req.send(null);
-  document.getElementById(id).innerHTML = req.responseText;
+  if (url) {
+    req = new XMLHttpRequest();
+    req.open("GET", url, false);
+    req.send(null);
+    document.getElementById(id).innerHTML = req.responseText;
+  } else {
+    document.getElementById(id).innerHTML = "";
+  }
 }
 
 function loadToHead(ref) {
@@ -146,4 +171,48 @@ function removeDynamicResources() {
   document.querySelectorAll('script[data-dynamic="true"]').forEach((script) => {
     script.parentNode.removeChild(script);
   });
+}
+
+function loginCheck() {
+  const storedData = localStorage.getItem("user");
+  const userObject = storedData ? JSON.parse(storedData) : {};
+  if (!userObject?.id) {
+    localStorage.removeItem("user");
+    loadPage("products");
+    // loadPage("login");
+  } else {
+    const lastPage = localStorage.getItem("lastPage") || "products"; // Default to 'products'
+    if (mainRoutes?.[lastPage]) {
+      if (lastPage === "login") {
+        loadPage("products"); // Fallback if lastPage is invalid
+      } else {
+        loadPage(lastPage);
+      }
+    } else {
+      loadPage("products"); // Fallback if lastPage is invalid
+    }
+  }
+}
+
+
+loginCheck();
+
+function logout() {
+  localStorage.removeItem("user");
+  localStorage.removeItem("lastPage"); // Clear last page data
+  loadPage("login", "main-content");
+}
+
+function goBack() {
+  if (pageHistory.length > 1) {
+    pageHistory.pop(); // Remove the current page
+    const previousPage = pageHistory.pop(); // Get the previous page
+    if (mainRoutes?.[previousPage]) {
+      loadPage(previousPage, "main-content");
+    } else {
+      loadPage("products", "main-content"); // Fallback if the previous page is invalid
+    }
+  } else {
+    console.log("No previous page in history.");
+  }
 }

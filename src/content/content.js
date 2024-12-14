@@ -1,5 +1,3 @@
-let contentTitle;
-
 function dynamicDetailSection(ob) {
   let boxDiv = document.createElement("div");
   boxDiv.id = "box";
@@ -65,10 +63,6 @@ async function productsListApi() {
     productsArray?.push(productObj);
     return "";
   });
-  if (document.cookie.indexOf(",counter=") >= 0) {
-    var counter = document.cookie.split(",")[1].split("=")[1];
-    document.getElementById("badge").innerHTML = counter;
-  }
   for (let i = 0; i < productsArray?.length; i++) {
     if (productsArray?.[i].isAccessory) {
       containerAccessories.appendChild(
